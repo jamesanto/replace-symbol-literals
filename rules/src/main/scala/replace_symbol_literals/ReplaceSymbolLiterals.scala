@@ -12,7 +12,7 @@ class ReplaceSymbolLiterals extends SemanticRule("ReplaceSymbolLiterals") {
           if t.fun.symbol.displayName == "apply" && t.symbol.owner.value == "scalaz/IndexedStateT#" && t.args.size == 1 =>
         val Term.Select(_, method) = t.fun
         Patch.replaceTree(method, "eval")
-      case t: Defn.Val if t.pats.size == 1 =>
+      case t: Defn.Val if t.pats.size == 1 && t.rhs.symbol.owner.value == "scalaz/IndexedStateT#" =>
         t.pats match {
           case List(x @ Pat.Tuple(List(Pat.Wildcard(), p))) =>
             Patch.replaceTree(x, p.toString)
