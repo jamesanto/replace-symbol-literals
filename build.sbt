@@ -8,8 +8,8 @@ lazy val commonSettings = Def.settings(
     homepage := Some(url("https://github.com/xuwei-k/replace-symbol-literals")),
     licenses := Seq("MIT License" -> url("https://opensource.org/licenses/mit-license")),
     description := "scalafix rule for replace deprecated scala.Symbol literals",
-    scalaVersion := V.scala212,
-    addCompilerPlugin(scalafixSemanticdb),
+    scalaVersion := "2.13.2",
+    addCompilerPlugin(scalafixSemanticdb("4.3.10")),
     releaseCrossBuild := true,
     releaseProcess := Seq[ReleaseStep](
       checkSnapshotDependencies,
@@ -82,7 +82,7 @@ skip in publish := true
 lazy val rules = project.settings(
   commonSettings,
   name := "replace-symbol-literals",
-  libraryDependencies += "ch.epfl.scala" %% "scalafix-core" % V.scalafixVersion
+  libraryDependencies += "ch.epfl.scala" %% "scalafix-core" % "0.9.15+46-4c23fac1-SNAPSHOT"
 )
 
 lazy val input = project.settings(
@@ -99,7 +99,7 @@ lazy val tests = project
   .settings(
     commonSettings,
     skip in publish := true,
-    libraryDependencies += "ch.epfl.scala" % "scalafix-testkit" % V.scalafixVersion % Test cross CrossVersion.full,
+    libraryDependencies += "ch.epfl.scala" % "scalafix-testkit" % "0.9.15+46-4c23fac1-SNAPSHOT" % Test cross CrossVersion.full,
     compile in Compile :=
       compile.in(Compile).dependsOn(compile.in(input, Compile)).value,
     scalafixTestkitOutputSourceDirectories :=
