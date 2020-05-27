@@ -82,7 +82,10 @@ skip in publish := true
 lazy val rules = project.settings(
   commonSettings,
   name := "replace-symbol-literals",
-  libraryDependencies += "ch.epfl.scala" %% "scalafix-core" % "0.9.15+46-4c23fac1-SNAPSHOT"
+  libraryDependencies += "ch.epfl.scala" %% "scalafix-core" % "0.9.15.2-SNAPSHOT",
+  version := "0.1.2.2-SNAPSHOT",
+  credentials += Credentials("Sonatype Nexus Repository Manager", "127.0.0.1", "admin", "admin"),
+  publishTo := Some("Sonatype Nexus Repository Manager" at "http://127.0.0.1:8081/repository/maven-snapshots")
 )
 
 lazy val input = project.settings(
@@ -99,7 +102,7 @@ lazy val tests = project
   .settings(
     commonSettings,
     skip in publish := true,
-    libraryDependencies += "ch.epfl.scala" % "scalafix-testkit" % "0.9.15+46-4c23fac1-SNAPSHOT" % Test cross CrossVersion.full,
+    libraryDependencies += "ch.epfl.scala" % "scalafix-testkit" % "0.9.15.2-SNAPSHOT" % Test cross CrossVersion.full,
     compile in Compile :=
       compile.in(Compile).dependsOn(compile.in(input, Compile)).value,
     scalafixTestkitOutputSourceDirectories :=
